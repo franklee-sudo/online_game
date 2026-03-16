@@ -63,10 +63,10 @@ const RADIUS = {
 const CLASS_LIST = [
   {
     id: "warrior",
-    name: "战士",
+    name: "Warrior",
     icon: "⚔️",
     color: "#ff7b7b",
-    desc: "攻击力 +20%\n最大生命 +50",
+    desc: "Attack +20%\nMax HP +50",
     apply(player) {
       player.damageMultiplier *= 1.2;
       player.maxHp += 50;
@@ -75,10 +75,10 @@ const CLASS_LIST = [
   },
   {
     id: "mage",
-    name: "法师",
+    name: "Mage",
     icon: "🔮",
     color: "#64a6ff",
-    desc: "技能冷却 -20%\n经验获取 +30%",
+    desc: "Skill Cooldown -20%\nXP Gain +30%",
     apply(player) {
       player.cooldownMultiplier *= 0.8;
       player.xpMultiplier *= 1.3;
@@ -86,10 +86,10 @@ const CLASS_LIST = [
   },
   {
     id: "ranger",
-    name: "游侠",
+    name: "Ranger",
     icon: "🏹",
     color: "#66ffad",
-    desc: "移动速度 +30%\n暴击率 +10%",
+    desc: "Move Speed +30%\nCrit Chance +10%",
     apply(player) {
       player.speed *= 1.3;
       player.critChance += 0.1;
@@ -98,9 +98,9 @@ const CLASS_LIST = [
 ];
 
 const WEAPON_NAMES = {
-  magic: "魔法弹",
-  boomerang: "回旋镖",
-  lightning: "闪电",
+  magic: "Magic Bolt",
+  boomerang: "Boomerang",
+  lightning: "Lightning",
 };
 
 const game = {
@@ -292,7 +292,7 @@ function startGame(classData) {
   showScreen(null);
   hud.classList.remove("hidden");
   updateHud();
-  showToast(`职业已选择：${classData.name}`);
+  showToast(`Class selected: ${classData.name}`);
 }
 
 function backToMenu() {
@@ -313,7 +313,7 @@ function resumeGameFromPause() {
   game.paused = false;
   game.state = "game";
   showScreen(null);
-  showToast("继续游戏", 1.1);
+  showToast("Game resumed", 1.1);
 }
 
 function togglePause() {
@@ -414,7 +414,7 @@ function spawnBoss() {
   const dist = 700;
   game.enemies.push({
     type: "boss",
-    name: "深渊统御者",
+    name: "Abyss Overlord",
     x: p.x + Math.cos(angle) * dist,
     y: p.y + Math.sin(angle) * dist,
     vx: 0,
@@ -437,7 +437,7 @@ function spawnBoss() {
     isCharging: false,
   });
   game.bossSpawned = true;
-  showToast("Boss 已降临！");
+  showToast("Boss has arrived!");
 }
 
 function spawnBossBullet(enemy, angle, speed, radius, damage, life, color, kind = "orb") {
@@ -460,7 +460,7 @@ function fireBossRadial(enemy) {
     const angle = (Math.PI * 2 * i) / count;
     spawnBossBullet(enemy, angle, 205, 11, 18, 5, "#ff9c9c", "radial");
   }
-  addFloatingText("扩散弹幕!", enemy.x, enemy.y - 38, "#ff8585", 22);
+  addFloatingText("Radial Burst!", enemy.x, enemy.y - 38, "#ff8585", 22);
 }
 
 function fireBossAimedSpread(enemy, player) {
@@ -473,7 +473,7 @@ function fireBossAimedSpread(enemy, player) {
     const speed = 232 + (i % 2) * 18;
     spawnBossBullet(enemy, angle, speed, 10, 16, 4.2, "#ffb8a1", "fan");
   }
-  addFloatingText("扇形齐射!", enemy.x, enemy.y - 58, "#ffd2a6", 21);
+  addFloatingText("Fan Volley!", enemy.x, enemy.y - 58, "#ffd2a6", 21);
 }
 
 function startBossSpiral(enemy) {
@@ -481,7 +481,7 @@ function startBossSpiral(enemy) {
   enemy.spiralTick = 0.06;
   enemy.spiralShotsLeft = 16;
   enemy.spiralAngle = Math.random() * Math.PI * 2;
-  addFloatingText("螺旋弹幕!", enemy.x, enemy.y - 78, "#ff9be2", 22);
+  addFloatingText("Spiral Barrage!", enemy.x, enemy.y - 78, "#ff9be2", 22);
 }
 
 function updateBossSpiral(enemy, dt) {
@@ -678,7 +678,7 @@ function handleEnemyDeath(enemy, killType = "unknown") {
   if (enemy.type === "boss") {
     game.bossDefeated = true;
     bossBarWrap.classList.add("hidden");
-    showToast("Boss 已击败！奖励掉落");
+    showToast("Boss defeated! Bonus loot dropped.");
     for (let i = 0; i < 10; i++) {
       game.drops.push({
         type: i % 3 === 0 ? "gold" : "xp",
@@ -978,7 +978,7 @@ function updateEnemySpawning(dt) {
     const lightningOn = hasWeapon("lightning");
     if (lightningOn && !game.lightningThreatUnlocked) {
       game.lightningThreatUnlocked = true;
-      showToast("警告：高压怪出现（稀有精英）", 2.2);
+      showToast("Warning: Shock Brute now spawning (rare elite).", 2.2);
     }
 
     const eliteChance = Math.min(0.28, 0.05 + game.time / 260);
@@ -1024,7 +1024,7 @@ function updateEnemies(dt) {
         enemy.vx = Math.cos(angle) * 390;
         enemy.vy = Math.sin(angle) * 390;
         enemy.chargeCd = 5.8;
-        addFloatingText("冲锋！", enemy.x, enemy.y - 60, "#ffad6d", 24);
+        addFloatingText("Charge!", enemy.x, enemy.y - 60, "#ffad6d", 24);
       }
       if (enemy.radialCd <= 0) {
         fireBossRadial(enemy);
@@ -1061,7 +1061,7 @@ function updateEnemies(dt) {
         enemy.burstVx = Math.cos(angle) * 340;
         enemy.burstVy = Math.sin(angle) * 340;
         enemy.burstCd = 3.6 + Math.random() * 1.4;
-        addFloatingText("突进!", enemy.x, enemy.y - 28, "#ffb37a", 20);
+        addFloatingText("Rush!", enemy.x, enemy.y - 28, "#ffb37a", 20);
       }
 
       if (enemy.isBursting) {
@@ -1165,9 +1165,9 @@ function gainXp(rawAmount) {
 function activateOmniShotBuff() {
   const p = game.player;
   p.omniShotTimer = Math.max(p.omniShotTimer, OMNI_SHOT_DURATION);
-  showToast("宝箱效果：法球风暴 10秒（10方向发射）", 2.2);
+  showToast("Chest Buff: Orb Storm for 10s (10-direction shots)", 2.2);
   addHitParticles(p.x, p.y, "#9de8ff", 20, 220);
-  addFloatingText("法球风暴!", p.x, p.y - 46, "#9de8ff", 26);
+  addFloatingText("Orb Storm!", p.x, p.y - 46, "#9de8ff", 26);
 }
 
 function triggerNukeChest() {
@@ -1189,7 +1189,7 @@ function triggerNukeChest() {
   }
   game.enemyProjectiles = [];
   addHitParticles(game.player.x, game.player.y, "#ffd08a", 26, 280);
-  showToast(`宝箱效果：清屏！清除 ${cleared} 个敌人`, 2);
+  showToast(`Chest Buff: Screen wipe! Cleared ${cleared} enemies`, 2);
 }
 
 function collectDrop(drop) {
@@ -1296,8 +1296,8 @@ function buildUpgradePool() {
   if (weaponLevel("magic") < 7) {
     push(
       "magic_up",
-      `升级：魔法弹 Lv.${weaponLevel("magic")} -> Lv.${weaponLevel("magic") + 1}`,
-      "强化弹道，后续可进化三发、多发与溅射",
+      `Upgrade: Magic Bolt Lv.${weaponLevel("magic")} -> Lv.${weaponLevel("magic") + 1}`,
+      "Improve projectile power; evolves into multi-shot and splash variants",
       () => {
         p.weapons.magic.level += 1;
       },
@@ -1305,14 +1305,14 @@ function buildUpgradePool() {
     );
   }
   if (!hasWeapon("boomerang")) {
-    push("unlock_boom", "新武器：回旋镖", "发射回旋镖切割路径上的敌人", () => {
+    push("unlock_boom", "New Weapon: Boomerang", "Throw a boomerang that slices through enemies", () => {
       p.weapons.boomerang = { id: "boomerang", level: 1, timer: 0.4 };
     }, 1.2);
   } else if (weaponLevel("boomerang") < 6) {
     push(
       "boom_up",
-      `升级：回旋镖 Lv.${weaponLevel("boomerang")} -> Lv.${weaponLevel("boomerang") + 1}`,
-      "增加回旋镖数量、伤害与范围效果",
+      `Upgrade: Boomerang Lv.${weaponLevel("boomerang")} -> Lv.${weaponLevel("boomerang") + 1}`,
+      "Increase boomerang count, damage, and area effects",
       () => {
         p.weapons.boomerang.level += 1;
       },
@@ -1320,37 +1320,37 @@ function buildUpgradePool() {
   }
 
   if (!hasWeapon("lightning")) {
-    push("unlock_light", "新武器：闪电", "瞬发连锁电击，可同时打击多个目标", () => {
+    push("unlock_light", "New Weapon: Lightning", "Instant chain lightning that can hit multiple targets", () => {
       p.weapons.lightning = { id: "lightning", level: 1, timer: 0.1 };
     }, 1.2);
   } else if (weaponLevel("lightning") < 6) {
     push(
       "light_up",
-      `升级：闪电 Lv.${weaponLevel("lightning")} -> Lv.${weaponLevel("lightning") + 1}`,
-      "缩短冷却、提升伤害与连锁数，并提升主电弧数量（最高3道）",
+      `Upgrade: Lightning Lv.${weaponLevel("lightning")} -> Lv.${weaponLevel("lightning") + 1}`,
+      "Lower cooldown, raise damage/chains, and increase main arcs (up to 3)",
       () => {
         p.weapons.lightning.level += 1;
       },
     );
   }
 
-  push("hp_up", "体魄强化", "最大生命 +25，并立即回复 30 生命", () => {
+  push("hp_up", "Fortitude", "Max HP +25 and instantly recover 30 HP", () => {
     p.maxHp += 25;
     p.hp = Math.min(p.maxHp, p.hp + 30);
   });
-  push("regen_up", "生命恢复", "每秒生命恢复 +1.2", () => {
+  push("regen_up", "Regeneration", "HP regen +1.2 per second", () => {
     p.regen += 1.2;
   });
-  push("speed_up", "步伐强化", "移动速度 +24", () => {
+  push("speed_up", "Agility", "Move speed +24", () => {
     p.speed += 24;
   });
-  push("pickup_up", "磁吸强化", "拾取范围 +26", () => {
+  push("pickup_up", "Magnet Range", "Pickup radius +26", () => {
     p.pickupRange += 26;
   });
-  push("atk_speed_up", "攻速强化", "攻击速度 +12%", () => {
+  push("atk_speed_up", "Attack Speed", "Attack speed +12%", () => {
     p.attackSpeedBonus += 0.12;
   });
-  push("crit_up", "暴击强化", "暴击率 +8%，暴伤 +0.15", () => {
+  push("crit_up", "Critical Boost", "Crit chance +8%, crit damage +0.15", () => {
     p.critChance += 0.08;
     p.critDamage += 0.15;
   });
@@ -1396,7 +1396,7 @@ function renderUpgradeChoices() {
     card.innerHTML = `
       <div class="title">${choice.title}</div>
       <div class="desc">${choice.desc}</div>
-      <div class="key">按 ${idx + 1}</div>
+      <div class="key">Press ${idx + 1}</div>
     `;
     card.addEventListener("click", () => chooseUpgrade(idx));
     upgradeChoices.appendChild(card);
@@ -1409,7 +1409,7 @@ function chooseUpgrade(index) {
   if (!choice) return;
   choice.apply();
   game.player.upgradeFlash = 0.6;
-  showToast(`强化成功：${choice.title}`, 1.8);
+  showToast(`Upgrade applied: ${choice.title}`, 1.8);
 
   game.state = "game";
   game.paused = false;
@@ -1425,7 +1425,7 @@ function checkMilestones() {
     game.frenzyStarted = true;
     game.spawnScale = 2.2;
     frenzyBanner.classList.remove("hidden");
-    showToast("怪物狂潮！生成速度 x2.2", 2.2);
+    showToast("Monster Frenzy! Spawn rate x2.2", 2.2);
   }
   if (game.frenzyStarted && game.time >= BOSS_SPAWN_TIME) {
     game.spawnScale = 1.1;
@@ -1448,15 +1448,15 @@ function checkMilestones() {
 
 function evaluateEndCondition() {
   if (game.player.hp <= 0) {
-    finishGame(false, "生命值归零");
+    finishGame(false, "HP reached zero");
     return;
   }
 
   if (game.time >= GAME_DURATION) {
     if (game.bossDefeated) {
-      finishGame(true, "坚持 10 分钟并击败 Boss，挑战成功！");
+      finishGame(true, "Survived 10 minutes and defeated the Boss!");
     } else {
-      finishGame(false, "时间到，但 Boss 未被击败");
+      finishGame(false, "Time up, but the Boss was not defeated");
     }
   }
 }
@@ -1471,16 +1471,16 @@ function finishGame(isWin, reason) {
   frenzyBanner.classList.add("hidden");
   messageToast.classList.add("hidden");
 
-  resultTitle.textContent = isWin ? "挑战胜利" : "游戏结束";
+  resultTitle.textContent = isWin ? "Victory" : "Game Over";
   resultReason.textContent = reason;
   resultStats.innerHTML = `
-    <div>职业：${CLASS_LIST.find((c) => c.id === game.selectedClass)?.name || "-"}</div>
-    <div>生存时间：${formatTime(game.time)}</div>
-    <div>击杀数：${game.kills}</div>
-    <div>等级：${game.player.level}</div>
-    <div>金币：${game.gold}</div>
-    <div>精华：${game.shards}</div>
-    <div>Boss击败：${game.bossDefeated ? "是" : "否"}</div>
+    <div>Class: ${CLASS_LIST.find((c) => c.id === game.selectedClass)?.name || "-"}</div>
+    <div>Survival Time: ${formatTime(game.time)}</div>
+    <div>Kills: ${game.kills}</div>
+    <div>Level: ${game.player.level}</div>
+    <div>Gold: ${game.gold}</div>
+    <div>Shards: ${game.shards}</div>
+    <div>Boss Defeated: ${game.bossDefeated ? "Yes" : "No"}</div>
   `;
   showScreen(resultScreen);
 }
@@ -1489,7 +1489,7 @@ function updateHud() {
   if (!game.player) return;
   const p = game.player;
   timerBox.textContent =
-    p.omniShotTimer > 0 ? `${formatTime(game.time)} | 法球风暴 ${p.omniShotTimer.toFixed(1)}s` : formatTime(game.time);
+    p.omniShotTimer > 0 ? `${formatTime(game.time)} | Orb Storm ${p.omniShotTimer.toFixed(1)}s` : formatTime(game.time);
   killCountEl.textContent = `${game.kills}`;
   goldCountEl.textContent = `${game.gold}`;
   shardCountEl.textContent = `${game.shards}`;
@@ -1508,7 +1508,7 @@ function updateHud() {
       const w = entries[i];
       slot.innerHTML = `<strong>${WEAPON_NAMES[w.id] || w.id}</strong><br/>Lv.${w.level}`;
     } else {
-      slot.innerHTML = `<span style="opacity:.48">空槽 ${i + 1}</span>`;
+      slot.innerHTML = `<span style="opacity:.48">Empty Slot ${i + 1}</span>`;
     }
     weaponSlots.appendChild(slot);
   }
@@ -1820,7 +1820,7 @@ function drawDrops(camX, camY) {
       ctx.font = '900 12px "Microsoft YaHei", sans-serif';
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
-      ctx.fillText(d.chestType === "nuke" ? "爆" : "风", s.x, s.y - 14);
+      ctx.fillText(d.chestType === "nuke" ? "N" : "S", s.x, s.y - 14);
       ctx.restore();
       continue;
     }

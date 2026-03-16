@@ -1,25 +1,25 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="吸血鬼幸存者风格网页生存游戏：自动攻击、宝箱强化、Boss战与10分钟挑战。"
+      content="Play the English version of this browser survival game: auto attacks, loot, weapon evolution, and boss fights."
     />
-    <meta name="keywords" content="网页游戏, 生存游戏, vampire survivors, 浏览器游戏, 独立游戏" />
-    <title>吸血鬼幸存者 - 网页版原型</title>
-    <link rel="canonical" href="./index.html" />
-    <link rel="alternate" hreflang="zh-CN" href="./index.html" />
-    <link rel="alternate" hreflang="en" href="./en/play.html" />
-    <link rel="stylesheet" href="./style.css" />
+    <meta name="keywords" content="browser game, survival game, vampire survivors, indie game, english version" />
+    <title>Online Survival Game - Play in English</title>
+    <link rel="canonical" href="./play.html" />
+    <link rel="alternate" hreflang="en" href="./play.html" />
+    <link rel="alternate" hreflang="zh-CN" href="../index.html" />
+    <link rel="stylesheet" href="../style.css" />
   </head>
   <body>
     <div id="app">
       <canvas id="gameCanvas"></canvas>
       <div id="globalNav">
-        <a class="navBtn active" href="./index.html">中文</a>
-        <a class="navBtn" href="./en/play.html">EN</a>
+        <a class="navBtn" href="../index.html">中文</a>
+        <a class="navBtn active" href="./play.html">EN</a>
       </div>
 
       <div id="hud" class="hidden">
@@ -40,10 +40,10 @@
         </div>
 
         <div id="leftHud">
-          <div class="panelTitle">武器槽位</div>
+          <div class="panelTitle">Weapon Slots</div>
           <div id="weaponSlots"></div>
-          <div class="hint">移动: WASD / 方向键</div>
-          <div class="hint">升级选择: 1 / 2 / 3</div>
+          <div class="hint">Move: WASD / Arrow Keys</div>
+          <div class="hint">Upgrade: 1 / 2 / 3</div>
         </div>
 
         <div id="bottomHud">
@@ -68,75 +68,75 @@
 
       <div id="warningOverlay" class="hidden">
         <div class="warningInner">
-          <div class="warningTitle">⚠ BOSS 警告 ⚠</div>
-          <div class="warningSub">强大的 Boss 即将出现！</div>
+          <div class="warningTitle">⚠ BOSS ALERT ⚠</div>
+          <div class="warningSub">A powerful Boss is approaching!</div>
         </div>
       </div>
 
-      <div id="frenzyBanner" class="hidden">怪物狂潮！生成速度 x2.2</div>
+      <div id="frenzyBanner" class="hidden">Monster Frenzy! Spawn Rate x2.2</div>
 
       <div id="menuScreen" class="screen active">
         <div class="menuCard">
-          <h1>吸血鬼幸存者</h1>
-          <p class="subtitle">元素之力 · 无尽生存</p>
-          <button id="startBtn" class="primaryBtn">开始游戏</button>
+          <h1>Online Survival</h1>
+          <p class="subtitle">Element Power · Endless Survival</p>
+          <button id="startBtn" class="primaryBtn">Start Game</button>
           <div class="features">
-            <h3>游戏特色</h3>
-            <p>使用 WASD / 方向键移动</p>
-            <p>自动攻击最近敌人</p>
-            <p>击杀掉落宝物，靠近自动拾取</p>
-            <p>升级进化：单发 -> 三发 -> 多发 + 溅射</p>
-            <p>第 5 分钟触发 Boss 警告与 Boss 战</p>
+            <h3>Highlights</h3>
+            <p>Move with WASD / Arrow keys</p>
+            <p>Auto-attack nearest enemies</p>
+            <p>Loot drops and auto-pickup</p>
+            <p>Evolve attacks: single -> multi-shot -> splash</p>
+            <p>Boss warning and boss fight at 5:00</p>
           </div>
         </div>
       </div>
 
       <div id="classScreen" class="screen">
         <div class="classCardWrap">
-          <h2>选择你的职业</h2>
+          <h2>Choose Your Class</h2>
           <div class="classGrid" id="classGrid"></div>
-          <button id="backToMenuBtn" class="ghostBtn">返回主菜单</button>
+          <button id="backToMenuBtn" class="ghostBtn">Back to Menu</button>
         </div>
       </div>
 
       <div id="upgradeScreen" class="screen">
         <div class="upgradeCardWrap">
-          <h2>升级！选择一项强化</h2>
+          <h2>Level Up! Choose an Upgrade</h2>
           <div id="upgradeChoices" class="upgradeGrid"></div>
         </div>
       </div>
 
       <div id="pauseScreen" class="screen">
         <div class="pauseCard">
-          <h2>游戏暂停</h2>
-          <p>按 ESC 或点击下方按钮继续游戏</p>
+          <h2>Paused</h2>
+          <p>Press ESC or click below to continue</p>
           <div class="resultButtons">
-            <button id="resumeBtn" class="primaryBtn">回到游戏</button>
-            <button id="pauseBackMenuBtn" class="ghostBtn">返回主菜单</button>
+            <button id="resumeBtn" class="primaryBtn">Resume</button>
+            <button id="pauseBackMenuBtn" class="ghostBtn">Back to Menu</button>
           </div>
         </div>
       </div>
 
       <div id="resultScreen" class="screen">
         <div class="resultCard">
-          <h2 id="resultTitle">游戏结束</h2>
+          <h2 id="resultTitle">Game Over</h2>
           <p id="resultReason"></p>
           <div id="resultStats"></div>
           <div class="resultButtons">
-            <button id="restartBtn" class="primaryBtn">重新开始</button>
-            <button id="backMenuResultBtn" class="ghostBtn">返回主菜单</button>
+            <button id="restartBtn" class="primaryBtn">Restart</button>
+            <button id="backMenuResultBtn" class="ghostBtn">Back to Menu</button>
           </div>
         </div>
       </div>
 
       <footer id="siteFooter">
-        <a href="./contact.html">联系方式</a>
-        <a href="./privacy.html">隐私政策</a>
-        <a href="./terms.html">服务条款</a>
+        <a href="./contact.html">Contact</a>
+        <a href="./privacy.html">Privacy</a>
+        <a href="./terms.html">Terms</a>
         <a href="mailto:09frank.lee@gmail.com">09frank.lee@gmail.com</a>
       </footer>
     </div>
 
-    <script src="./game.js"></script>
+    <script src="../game.en.js"></script>
   </body>
 </html>

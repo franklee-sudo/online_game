@@ -1,0 +1,15 @@
+{
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/en",
+      "destination": "/en/play.html",
+      "permanent": false
+    },
+    {
+      "source": "/play",
+      "destination": "/index.html",
+      "permanent": false
+    }
+  ]
+}
