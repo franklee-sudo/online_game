@@ -21,6 +21,7 @@ const bossName = document.getElementById("bossName");
 const menuScreen = document.getElementById("menuScreen");
 const classScreen = document.getElementById("classScreen");
 const upgradeScreen = document.getElementById("upgradeScreen");
+const pauseScreen = document.getElementById("pauseScreen");
 const resultScreen = document.getElementById("resultScreen");
 const classGrid = document.getElementById("classGrid");
 const upgradeChoices = document.getElementById("upgradeChoices");
@@ -35,6 +36,8 @@ const startBtn = document.getElementById("startBtn");
 const backToMenuBtn = document.getElementById("backToMenuBtn");
 const restartBtn = document.getElementById("restartBtn");
 const backMenuResultBtn = document.getElementById("backMenuResultBtn");
+const resumeBtn = document.getElementById("resumeBtn");
+const pauseBackMenuBtn = document.getElementById("pauseBackMenuBtn");
 
 const GAME_DURATION = 600; // 10 minutes
 const BOSS_SPAWN_TIME = 300; // 5 minutes
@@ -140,10 +143,12 @@ function resizeCanvas() {
 }
 
 function showScreen(target) {
-  for (const screen of [menuScreen, classScreen, upgradeScreen, resultScreen]) {
+  for (const screen of [menuScreen, classScreen, upgradeScreen, pauseScreen, resultScreen]) {
     screen.classList.remove("active");
   }
-  target.classList.add("active");
+  if (target) {
+    target.classList.add("active");
+  }
 }
 
 function showToast(text, duration = 2) {
@@ -281,7 +286,7 @@ function startGame(classData) {
   game.selectedClass = classData.id;
   resetGameState();
   classData.apply(game.player);
-  showScreen(document.createElement("div"));
+  showScreen(null);
   hud.classList.remove("hidden");
   updateHud();
   showToast(`职业已选择：${classData.name}`);
@@ -296,6 +301,31 @@ function backToMenu() {
   frenzyBanner.classList.add("hidden");
   messageToast.classList.add("hidden");
   showScreen(menuScreen);
+}
+
+function resumeGameFromPause() {
+  if (game.state !== "paused") {
+    return;
+  }
+  game.paused = false;
+  game.state = "game";
+  showScreen(null);
+  showToast("继续游戏", 1.1);
+}
+
+function togglePause() {
+  if (!game.running) {
+    return;
+  }
+  if (game.state === "game" && !game.paused) {
+    game.paused = true;
+    game.state = "paused";
+    showScreen(pauseScreen);
+    return;
+  }
+  if (game.state === "paused") {
+    resumeGameFromPause();
+  }
 }
 
 function worldToScreen(x, y, camX, camY) {
@@ -1242,7 +1272,7 @@ function chooseUpgrade(index) {
 
   game.state = "game";
   game.paused = false;
-  showScreen(document.createElement("div"));
+  showScreen(null);
 
   if (game.upgradesPending > 0) {
     setTimeout(triggerUpgrade, 0);
@@ -1660,6 +1690,13 @@ function tick(now) {
 
 window.addEventListener("resize", resizeCanvas);
 window.addEventListener("keydown", (e) => {
+  if (e.code === "Escape") {
+    if (game.state === "game" || game.state === "paused") {
+      e.preventDefault();
+      togglePause();
+      return;
+    }
+  }
   keys[e.code] = true;
   if (game.state === "upgrade") {
     if (e.code === "Digit1") chooseUpgrade(0);
@@ -1685,6 +1722,14 @@ restartBtn.addEventListener("click", () => {
 });
 
 backMenuResultBtn.addEventListener("click", () => {
+  backToMenu();
+});
+
+resumeBtn.addEventListener("click", () => {
+  resumeGameFromPause();
+});
+
+pauseBackMenuBtn.addEventListener("click", () => {
   backToMenu();
 });
 

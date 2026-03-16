@@ -67,7 +67,8 @@ body {
 .menuCard,
 .classCardWrap,
 .upgradeCardWrap,
-.resultCard {
+.resultCard,
+.pauseCard {
   width: min(1200px, 94vw);
   border-radius: 18px;
   border: 2px solid rgba(92, 163, 255, 0.7);
@@ -501,6 +502,16 @@ h2 {
   max-width: 760px;
   padding: 26px;
   text-align: center;
+}
+
+.pauseCard {
+  max-width: 680px;
+  padding: 24px;
+  text-align: center;
+}
+
+.pauseCard p {
+  font-size: 24px;
 }
 
 #resultTitle {
