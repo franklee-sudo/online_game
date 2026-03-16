@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>吸血鬼幸存者 - 网页版原型</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <canvas id="gameCanvas"></canvas>
+
+      <div id="hud" class="hidden">
+        <div id="topHud">
+          <div id="timerBox">00:00</div>
+          <div id="bossBarWrap" class="hidden">
+            <div id="bossName">Boss</div>
+            <div id="bossBar">
+              <div id="bossBarFill"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="rightHud">
+          <div class="statBox">💀 <span id="killCount">0</span></div>
+          <div class="statBox gold">💰 <span id="goldCount">0</span></div>
+          <div class="statBox shard">🔷 <span id="shardCount">0</span></div>
+        </div>
+
+        <div id="leftHud">
+          <div class="panelTitle">武器槽位</div>
+          <div id="weaponSlots"></div>
+          <div class="hint">移动: WASD / 方向键</div>
+          <div class="hint">升级选择: 1 / 2 / 3</div>
+        </div>
+
+        <div id="bottomHud">
+          <div class="barRow">
+            <span class="barLabel">HP</span>
+            <div class="bar hpBar">
+              <div id="hpFill" class="fill"></div>
+              <span id="hpText" class="barText">100 / 100</span>
+            </div>
+          </div>
+          <div class="barRow">
+            <span class="barLabel">Lv.<span id="levelText">1</span></span>
+            <div class="bar xpBar">
+              <div id="xpFill" class="fill"></div>
+              <span id="xpText" class="barText">0 / 100</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="messageToast" class="hidden"></div>
+
+      <div id="warningOverlay" class="hidden">
+        <div class="warningInner">
+          <div class="warningTitle">⚠ BOSS 警告 ⚠</div>
+          <div class="warningSub">强大的 Boss 即将出现！</div>
+        </div>
+      </div>
+
+      <div id="frenzyBanner" class="hidden">怪物狂潮！生成速度 x2.2</div>
+
+      <div id="menuScreen" class="screen active">
+        <div class="menuCard">
+          <h1>吸血鬼幸存者</h1>
+          <p class="subtitle">元素之力 · 无尽生存</p>
+          <button id="startBtn" class="primaryBtn">开始游戏</button>
+          <div class="features">
+            <h3>游戏特色</h3>
+            <p>使用 WASD / 方向键移动</p>
+            <p>自动攻击最近敌人</p>
+            <p>击杀掉落宝物，靠近自动拾取</p>
+            <p>升级进化：单发 -> 三发 -> 多发 + 溅射</p>
+            <p>第 5 分钟触发 Boss 警告与 Boss 战</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="classScreen" class="screen">
+        <div class="classCardWrap">
+          <h2>选择你的职业</h2>
+          <div class="classGrid" id="classGrid"></div>
+          <button id="backToMenuBtn" class="ghostBtn">返回主菜单</button>
+        </div>
+      </div>
+
+      <div id="upgradeScreen" class="screen">
+        <div class="upgradeCardWrap">
+          <h2>升级！选择一项强化</h2>
+          <div id="upgradeChoices" class="upgradeGrid"></div>
+        </div>
+      </div>
+
+      <div id="resultScreen" class="screen">
+        <div class="resultCard">
+          <h2 id="resultTitle">游戏结束</h2>
+          <p id="resultReason"></p>
+          <div id="resultStats"></div>
+          <div class="resultButtons">
+            <button id="restartBtn" class="primaryBtn">重新开始</button>
+            <button id="backMenuResultBtn" class="ghostBtn">返回主菜单</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="./game.js"></script>
+  </body>
+</html>
