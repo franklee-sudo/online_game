@@ -972,7 +972,7 @@ function updatePlayer(dt) {
 
 function updateEnemySpawning(dt) {
   const dangerScale = 1 + Math.floor(game.time / 20) * 0.1;
-  const baseRate = 0.95 / (dangerScale * game.spawnScale);
+  const baseRate = 0.84 / (dangerScale * game.spawnScale);
   game.spawnTimer -= dt;
   if (game.spawnTimer <= 0) {
     const lightningOn = hasWeapon("lightning");
@@ -992,13 +992,16 @@ function updateEnemySpawning(dt) {
       }
     }
 
-    if (Math.random() < Math.min(0.28, 0.08 + game.time / 1200)) {
+    if (Math.random() < Math.min(0.34, 0.12 + game.time / 1100)) {
+      spawnEnemy("normal");
+    }
+    if (game.time < 40 && Math.random() < 0.26) {
       spawnEnemy("normal");
     }
     if (game.time > 240 && Math.random() < 0.08) {
       spawnEnemy("normal");
     }
-    game.spawnTimer = Math.max(0.14, baseRate);
+    game.spawnTimer = Math.max(0.11, baseRate);
   }
 }
 

@@ -218,7 +218,8 @@ h2 {
 }
 
 #backToMenuBtn {
-  margin-top: 18px;
+  display: block;
+  margin: 18px auto 0;
 }
 
 #upgradeScreen {
