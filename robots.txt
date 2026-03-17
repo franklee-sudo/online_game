@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://online-game.vercel.app/sitemap.xml
+Sitemap: https://game.yoyolab.top/sitemap.xml
