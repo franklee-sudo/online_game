@@ -1,5 +1,11 @@
 {
   "trailingSlash": false,
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/landing.html"
+    }
+  ],
   "redirects": [
     {
       "source": "/en",
@@ -7,7 +13,17 @@
       "permanent": false
     },
     {
+      "source": "/zh",
+      "destination": "/index.html",
+      "permanent": false
+    },
+    {
       "source": "/play",
+      "destination": "/en/play.html",
+      "permanent": false
+    },
+    {
+      "source": "/play-zh",
       "destination": "/index.html",
       "permanent": false
     }

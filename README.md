@@ -3,7 +3,8 @@
 这是一个基于浏览器的生存类网页游戏项目，支持中文与英文入口。
 
 ## 在线地址
-- 中文游戏：`https://game.yoyolab.top/`
+- 根路径落地页（英文优先）：`https://game.yoyolab.top/`
+- 中文游戏：`https://game.yoyolab.top/index.html`
 - 英文游戏：`https://game.yoyolab.top/en/play.html`
 
 ## 主要玩法
